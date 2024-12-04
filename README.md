@@ -1,13 +1,12 @@
 # aoc24
 Advent of Code 2024
 
-Run:
-Test:
+Run a day:
 ```bash
-cargo test --test day01
+cargo run 1 
 ```
 
-Test:
+Test a day:
 ```bash
 cargo test --test day01
 ```
