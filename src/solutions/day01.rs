@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fs;
 
 // Makes sense for column-oriented?
@@ -31,17 +32,31 @@ fn parse_data() -> Data {
     Data { c1, c2 }
 }
 
+fn value_counts(col: &Vec<u32>) -> HashMap<u32, u32> {
+    let mut vc: HashMap<_, _> = HashMap::new();
+
+    for &value in col {
+        *vc.entry(value).or_insert(0) += 1;
+    }
+
+    vc
+}
+
 pub fn main() {
     let mut data = parse_data();
 
     data.c1.sort_unstable();
     data.c2.sort_unstable();
 
-    let answ: u32 = data
+    let answ_p1: u32 = data
         .c1
         .iter()
         .zip(data.c2.iter())
         .map(|(a, b)| if a > b { a - b } else { b - a }) // creative .abs() for u32
         .sum();
-    println!("Part 1 answer: {answ}")
+    println!("Part 1 answer: {answ_p1}");
+
+    let vc = value_counts(&data.c2);
+    let answ_p2: u32 = data.c1.iter().map(|&a| a * *vc.get(&a).unwrap_or(&0)).sum();
+    println!("Part 2 answer: {answ_p2}");
 }
