@@ -11,6 +11,7 @@ fn main() {
     match day {
         1 => solutions::day01::main(),
         2 => solutions::day02::main(),
+        3 => solutions::day03::main(),
         _ => eprintln!("Solution for Day {} is not implemented yet", day),
     }
 }
