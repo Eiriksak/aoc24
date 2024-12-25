@@ -25,7 +25,7 @@ pub fn main() {
     let cols = matrix[0].len();
     let xmas = b"XMAS";
 
-    let mut count = 0;
+    let mut count_p1 = 0;
     for i in 0..rows {
         for j in 0..cols {
             // For every item in matrix, scan all directions for word match
@@ -46,11 +46,35 @@ pub fn main() {
                     }
                 }
                 if valid {
-                    count += 1
+                    count_p1 += 1
                 }
             }
         }
     }
 
-    println!("{}", count);
+    println!("Part1 {}", count_p1);
+
+    // M.S   [-1,-1],[-1,0],[-1,1]
+    // .A.   [0,-1],[0,0],[0,1]
+    // M.S   [1,-1],[1,0]],[1,1]
+
+    let mut count_p2 = 0;
+    let ms = b"MS";
+    let sm = b"SM";
+
+    for i in 0..rows {
+        for j in 0..cols {
+            if i < 1 || i + 1 >= rows || j < 1 || j + 1 >= cols || matrix[i][j] != b"A"[0] {
+                continue;
+            }
+            let diag1 = [matrix[i - 1][j - 1], matrix[i + 1][j + 1]]; // up left, down right
+            let diag2 = [matrix[i + 1][j - 1], matrix[i - 1][j + 1]]; // down left, up right
+
+            if (&diag1 == ms || &diag1 == sm) && (&diag2 == ms || &diag2 == sm) {
+                count_p2 += 1;
+            }
+        }
+    }
+
+    println!("Part2 {}", count_p2);
 }
